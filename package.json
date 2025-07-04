@@ -1,0 +1,17 @@
+{
+  "name": "tintoreria-encuestas",
+  "version": "1.0.0",
+  "description": "Mini-app de encuestas para franquicia de tintorerías",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build needed for static site'",
+    "deploy": "netlify deploy --prod"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}
