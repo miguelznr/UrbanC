@@ -1,8 +1,8 @@
 // TODO: Configurar variables de entorno en Netlify
-// SUPA_URL=tu_supabase_url
-// SUPA_KEY=tu_supabase_anon_key
-// BREVO_KEY=tu_brevo_api_key
-// TEMPLATE_ID=tu_template_id_brevo
+// SUPA_URL=https://htvnwxmpratnqunufedd.supabase.co
+// SUPA_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0dm53eG1wcmF0bnF1bnVmZWRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE2NTgwNjEsImV4cCI6MjA2NzIzNDA2MX0.07Xjo3TxOPSZ68EXGcAH25Qb3IQ5aVdntO39VpoWFrY
+// BREVO_KEY=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
+// TEMPLATE_ID=1
 
 const { createClient } = require('@supabase/supabase-js');
 
