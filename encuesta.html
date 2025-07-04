@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de mejora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body class="bg-gray-50 min-h-screen py-8">
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg" x-data="surveyApp()">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">Ayúdanos a mejorar</h1>
+            <p class="text-gray-600">Tus comentarios son muy importantes para nosotros</p>
+        </div>
+
+        <form @submit.prevent="submitSurvey()">
+            <!-- Pregunta 1 -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    1. ¿Qué aspectos de nuestro servicio crees que podríamos mejorar?
+                </label>
+                <textarea 
+                    x-model="answers.improvement"
+                    rows="4"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Comparte tus sugerencias..."
+                ></textarea>
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    2. ¿Hubo algún problema específico con tu pedido?
+                </label>
+                <textarea 
+                    x-model="answers.problem"
+                    rows="4"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Describe el problema que experimentaste..."
+                ></textarea>
+            </div>
+
+            <!-- Pregunta 3 -->
+            <div class="mb-8">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    3. ¿Qué te haría volver a elegir nuestros servicios?
+                </label>
+                <textarea 
+                    x-model="answers.comeback"
+                    rows="4"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="¿Qué cambios te gustaría ver?"
+                ></textarea>
+            </div>
+
+            <!-- Botón enviar -->
+            <div class="text-center">
+                <button 
+                    type="submit"
+                    :disabled="loading"
+                    class="bg-blue-600 text-white py-3 px-8 rounded-md hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                >
+                    <span x-show="!loading">Enviar encuesta</span>
+                    <span x-show="loading">Enviando...</span>
+                </button>
+            </div>
+        </form>
+
+        <!-- Mensaje de éxito -->
+        <div x-show="success" class="mt-6 p-4 bg-green-100 border border-green-300 rounded-md">
+            <p class="text-green-700 text-center">¡Gracias por tus comentarios! Nos pondremos en contacto contigo pronto.</p>
+        </div>
+
+        <!-- Mensaje de error -->
+        <div x-show="error" class="mt-6 p-4 bg-red-100 border border-red-300 rounded-md">
+            <p class="text-red-700 text-center" x-text="error"></p>
+        </div>
+    </div>
+
+    <script>
+        function surveyApp() {
+            return {
+                answers: {
+                    improvement: '',
+                    problem: '',
+                    comeback: ''
+                },
+                loading: false,
+                success: false,
+                error: '',
+                loc: '',
+                rating: '',
+
+                init() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    this.loc = urlParams.get('loc') || '01';
+                    this.rating = urlParams.get('r') || '';
+                },
+
+                submitSurvey() {
+                    this.loading = true;
+                    this.error = '';
+
+                    // Crear mailto con las respuestas
+                    const subject = `Encuesta de mejora - Local ${this.loc}`;
+                    const body = `
+Encuesta de mejora - Local ${this.loc}
+Puntuación inicial: ${this.rating}/5
+
+1. ¿Qué aspectos podríamos mejorar?
+${this.answers.improvement}
+
+2. ¿Hubo algún problema específico?
+${this.answers.problem}
+
+3. ¿Qué te haría volver a elegir nuestros servicios?
+${this.answers.comeback}
+                    `.trim();
+
+                    // Simular envío y mostrar éxito
+                    setTimeout(() => {
+                        this.loading = false;
+                        this.success = true;
+                        
+                        // Opcional: abrir cliente de correo
+                        const mailtoLink = `mailto:feedback@tintoreria.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                        window.location.href = mailtoLink;
+                    }, 1000);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
